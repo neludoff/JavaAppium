@@ -1,19 +1,19 @@
-package Lib.ui.ios;
+package Lib.ui.mobile_web;
 
 import Lib.ui.MyListsPageObject;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class iOSMyListsPageObject extends MyListsPageObject
-{
+public class MWMyListsPageObject extends MyListsPageObject {
+
     static {
-        ARTICLE_BY_TITLE_TPL = "xpath://XCUIElementTypeStaticText[contains(@name,'{TITLE}')]";
+        ARTICLE_BY_TITLE_TPL = "xpath://a/h3[contains(text(),'{TITLE}')]";
+        REMOVE_FROM_SAVED_BUTTON = "xpath://li[@title='{SUBSTRING}']/a[contains(@class, 'watched')]";
         MY_LIST_ELEMENT = "xpath://*[@content-desc='My lists']";
-        SYNC_YOUR_SAVED_ARTICLES = "id:Close";
         IMAGE_ELEMENT = "xpath://XCUIElementTypeImage//..//XCUIElementTypeStaticText";
         SEARCH_BUTTON ="id:Search";
     }
 
-    public iOSMyListsPageObject(RemoteWebDriver driver){
+    public MWMyListsPageObject(RemoteWebDriver driver){
         super(driver);
     }
 }

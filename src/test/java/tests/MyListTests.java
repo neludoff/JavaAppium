@@ -15,14 +15,17 @@ import java.util.List;
 
 public class MyListTests extends CoreTestCase {
 
-    private static final String name_of_folder = "Learning programming";
+    private static final String
+            name_of_folder = "Learning programming",
+            login = "Learnappium12",
+            password = "6s-WBCfYixKn%aN";
 
     @Test
     public void testSaveFirstArticleToMyList(){
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
+        SearchPageObject.clickByArticleWithSubstring("bject-oriented programming language");
 
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
@@ -33,10 +36,29 @@ public class MyListTests extends CoreTestCase {
         } else {
             ArticlePageObject.addArticleToMySaved();
         }
+
+        if (Platform.getInstance().isMw()){
+            AuthorizationPageObject Auth = new AuthorizationPageObject(driver);
+            Auth.clickAuthButton();
+            Auth.enterLoginData(login, password);
+            Auth.submitForm();;
+
+            ArticlePageObject.waitForTitleElement();
+
+            assertEquals(
+                    "We are not on the same page after login.",
+                    article_title,
+                    ArticlePageObject.getArticleTitile()
+            );
+
+            ArticlePageObject.addArticleToMySaved();;
+        }
+
         ArticlePageObject.closeArticle();
         SearchPageObject.clickCancelSearch();
 
         NavigationUI NavigationUI = NavigationUIFactory.get(driver);
+        NavigationUI.openNavigation();
         NavigationUI.clickMyLists();
 
         MyListsPageObject MyListPageObject = MyListsPageObjectFactory.get(driver);
@@ -63,7 +85,7 @@ public class MyListTests extends CoreTestCase {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
+        SearchPageObject.clickByArticleWithSubstring("bject-oriented programming language");
 
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
@@ -74,6 +96,24 @@ public class MyListTests extends CoreTestCase {
         } else {
             ArticlePageObject.addArticleToMySaved();
         }
+
+        if (Platform.getInstance().isMw()){
+            AuthorizationPageObject Auth = new AuthorizationPageObject(driver);
+            Auth.clickAuthButton();
+            Auth.enterLoginData(login, password);
+            Auth.submitForm();;
+
+            ArticlePageObject.waitForTitleElement();
+
+            assertEquals(
+                    "We are not on the same page after login.",
+                    first_article_title,
+                    ArticlePageObject.getArticleTitile()
+            );
+
+            ArticlePageObject.addArticleToMySaved();;
+        }
+
         ArticlePageObject.closeArticle();
         SearchPageObject.clickCancelSearch();
 
@@ -101,9 +141,8 @@ public class MyListTests extends CoreTestCase {
         // Add 2nd article to reading list
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.clickByArticleWithSubstring("Indonesian island");
+        SearchPageObject.clickByArticleWithSubstring("ndonesian island");
 
-        // String second_article_title = ArticlePageObject.getArticleTitile();
         if(Platform.getInstance().isAndroid()){
             ArticlePageObject.addArticleToMyList(name_of_folder);
         } else {
